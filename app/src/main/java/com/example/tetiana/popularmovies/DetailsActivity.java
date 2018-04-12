@@ -1,6 +1,8 @@
 package com.example.tetiana.popularmovies;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -67,26 +69,31 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-        ibFavoriteMovie.setOnClickListener(new View.OnClickListener() {
+        Cursor cursor = getContentResolver().query(FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI, null, FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_ID + " = " + DatabaseUtils.sqlEscapeString(movie_id), null, null);
+        if(cursor.getCount() == 0) {
+            // not found in database
 
-            @Override
-            public void onClick(View v) {
-                ContentValues values = new ContentValues();
-                String addMovieTitleToDB = tvOriginalTitle.getText().toString();
-                String addMovieReleaseDataToDB = tvReleaseDate.getText().toString();
-                String addMovieOverlieToDB = tvOverview.getText().toString();
-                String addMovieVoteAverageToDB = tvVoteAverage.getText().toString();
+            ibFavoriteMovie.setOnClickListener(new View.OnClickListener() {
 
-                values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_ID, movie_id);
-                values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_POSTER_PATH, posterPath);
-                values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_RELEASE_DATA, addMovieReleaseDataToDB );
-                values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_OVERVIEW, addMovieOverlieToDB);
-                values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_VOTE_AVERAGE, addMovieVoteAverageToDB );
-                values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_TITLE, addMovieTitleToDB);
-                values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_BACKDROP_PATH, backdropPath);
+                @Override
+                public void onClick(View v) {
+                    ContentValues values = new ContentValues();
+                    String addMovieTitleToDB = tvOriginalTitle.getText().toString();
+                    String addMovieReleaseDataToDB = tvReleaseDate.getText().toString();
+                    String addMovieOverlieToDB = tvOverview.getText().toString();
+                    String addMovieVoteAverageToDB = tvVoteAverage.getText().toString();
 
-                getContentResolver().insert(FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI, values);
-            }
-        });
+                    values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_ID, movie_id);
+                    values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_POSTER_PATH, posterPath);
+                    values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_RELEASE_DATA, addMovieReleaseDataToDB);
+                    values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_OVERVIEW, addMovieOverlieToDB);
+                    values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_VOTE_AVERAGE, addMovieVoteAverageToDB);
+                    values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_TITLE, addMovieTitleToDB);
+                    values.put(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_BACKDROP_PATH, backdropPath);
+
+                    getContentResolver().insert(FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI, values);
+                }
+            });
+        }
     }
 }
