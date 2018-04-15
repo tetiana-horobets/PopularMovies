@@ -11,12 +11,18 @@ import android.widget.ImageView;
 import com.example.tetiana.popularmovies.DatabaseFavoriteMovie.FavoriteMovieContract;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdapter.GuestViewHolder> {
 
     private Cursor mCursor;
     private Context mContext;
     final private FavoriteMovieAdapter.ListItemClickListener mOnClickListener;
     private int columIndexs;
+    int clickedPosition;
+
+    List<String> movieListId = new ArrayList<>();
 
     FavoriteMovieAdapter(Context context, FavoriteMovieAdapter.ListItemClickListener listener) {
         this.mContext = context;
@@ -38,11 +44,19 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
     public void onBindViewHolder(GuestViewHolder holder, int position) {
         columIndexs = mCursor.getColumnIndex(FavoriteMovieContract.TitleAndIDsOfMovies._ID);
         int getMoviePosterPatch = mCursor.getColumnIndex(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_POSTER_PATH);
+        int favoriteMovieID = mCursor.getColumnIndex(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_ID);
+
 
         mCursor.moveToPosition(position);
         final int id = mCursor.getInt(columIndexs);
 
         String posterPatch = mCursor.getString(getMoviePosterPatch);
+        String movieID = mCursor.getString(favoriteMovieID);
+
+        movieListId.add(movieID);
+
+
+
         holder.itemView.setTag(id);
         Picasso.with(mContext.getApplicationContext())
                 .load(posterPatch)
@@ -54,7 +68,8 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         if (mCursor == null) {
             return 0;
         }
-        return mCursor.getCount();    }
+        return mCursor.getCount();
+    }
 
     class GuestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -63,18 +78,19 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         GuestViewHolder(View itemView) {
             super(itemView);
             posterPatch = (ImageView) itemView.findViewById(R.id.posterPatch);
+
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            int clickedPosition = getAdapterPosition();
+            clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
         }
     }
 
     public String getMovie_id() {
-        return String.valueOf(mCursor.getInt(columIndexs));
+       return movieListId.get(clickedPosition);
     }
 
     void swapCursor(Cursor c) {

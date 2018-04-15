@@ -26,7 +26,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.movieList = movieList;
         mOnClickListener = listener;
     }
-   
 
     public interface ListItemClickListener {
         void onListItemClick(int clickedItemIndex);
@@ -80,3 +79,4 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return String.valueOf(movieList.get(clickedPosition).getMovie_id());
     }
 }
+

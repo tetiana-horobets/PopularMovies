@@ -110,9 +110,12 @@ public class Favorite extends AppCompatActivity implements
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
+        String id = mAdapter.getMovie_id();
         Context context = Favorite.this;
         Class destinationActivity = FavoriteDetails.class;
-        Intent intent = new Intent(context, destinationActivity);
-        startActivity(intent);
+        Intent favoriteIntent = new Intent(context, destinationActivity);
+        favoriteIntent.putExtra("id", id);
+        startActivity(favoriteIntent);
     }
 }
+

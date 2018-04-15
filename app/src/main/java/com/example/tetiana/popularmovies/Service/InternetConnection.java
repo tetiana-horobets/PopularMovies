@@ -2,7 +2,7 @@ package com.example.tetiana.popularmovies.Service;
 
 import java.io.IOException;
 
-public class CheckInternetConnection {
+public class InternetConnection {
 
     public static boolean isOnline() {
         Runtime runtime = Runtime.getRuntime();

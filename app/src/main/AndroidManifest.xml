@@ -30,6 +30,7 @@
             android:name=".DatabaseFavoriteMovie.MovieContentProvider"
             android:authorities="com.example.tetiana.popularmovies"
             android:exported="false" />
+
     </application>
 
 </manifest>

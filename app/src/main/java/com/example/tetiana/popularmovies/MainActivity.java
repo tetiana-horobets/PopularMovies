@@ -12,7 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.tetiana.popularmovies.Service.CheckInternetConnection;
+import com.example.tetiana.popularmovies.Service.InternetConnection;
 import com.example.tetiana.popularmovies.Service.RestAdapter;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setMovieList(movies);
 
-        if (!CheckInternetConnection.isOnline()){
+        if (!InternetConnection.isOnline()){
             mEmptyStateTextView.setText(R.string.no_internet);
         }
 
@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         RestAdapter.getService().getTopRatedMovies(new ChangeMe(mAdapter));
     }
 
+    //TODO rename
+
     private static class ChangeMe implements Callback<Movie.MovieResult> {
 
         private MovieAdapter mAdapter;
@@ -133,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         @Override
         public void success(Movie.MovieResult movieResult, Response response) {
             mAdapter.setMovieList(movieResult.getResults());
-
         }
 
         @Override
