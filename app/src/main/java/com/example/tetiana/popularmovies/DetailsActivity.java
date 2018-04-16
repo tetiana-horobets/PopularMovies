@@ -59,7 +59,7 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
         Button ibFavoriteMovie = findViewById(R.id.favorite_movie);
 
         RecyclerView mRecyclerView = findViewById(R.id.rv_show_video);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mAdapter = new VideoAdapter(videoList, this, this);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -96,6 +96,20 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
                     videoList.add(movieTrailerResponse.getResults().get(i).getKey());
                 }
                 mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+
+        final List<Review> reviewList = new ArrayList<>();
+
+        RestAdapter.getService().getMovieRevies(Integer.parseInt(movie_id), new Callback<MoviesApiService.MovieReviewResponse>() {
+            @Override
+            public void success(MoviesApiService.MovieReviewResponse movieReviewResponse, Response response) {
+                reviewList.addAll(movieReviewResponse.getResults());
             }
 
             @Override
