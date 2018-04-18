@@ -73,7 +73,7 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
         GuestViewHolder(View itemView) {
             super(itemView);
-            posterPatch = (ImageView) itemView.findViewById(R.id.posterPatch);
+            posterPatch = itemView.findViewById(R.id.posterPatch);
             itemView.setOnClickListener(this);
         }
 

@@ -79,4 +79,3 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return String.valueOf(movieList.get(clickedPosition).getMovie_id());
     }
 }
-

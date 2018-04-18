@@ -172,5 +172,4 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
             context.startActivity(webIntent);
         }
     }
-
 }

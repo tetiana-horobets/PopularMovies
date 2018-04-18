@@ -113,7 +113,8 @@ public class MovieContentProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
-        return tasksDeleted;    }
+        return tasksDeleted;
+    }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {

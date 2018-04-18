@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -17,9 +16,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.example.tetiana.popularmovies.DatabaseFavoriteMovie.FavoriteMovieContract;
 
@@ -32,9 +28,6 @@ public class Favorite extends AppCompatActivity implements
     private FavoriteMovieAdapter mAdapter;
     RecyclerView mRecyclerView;
     Cursor cursor = null;
-    private int menu_selection = -1;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +40,6 @@ public class Favorite extends AppCompatActivity implements
         mAdapter = new FavoriteMovieAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
 
-
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -56,12 +48,12 @@ public class Favorite extends AppCompatActivity implements
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-                final int position = viewHolder.getAdapterPosition(); //get position which is swipe
+                final int position = viewHolder.getAdapterPosition();
 
-                if ((direction == ItemTouchHelper.LEFT )||(direction == ItemTouchHelper.RIGHT)) {    //if swipe left
+                if ((direction == ItemTouchHelper.LEFT )||(direction == ItemTouchHelper.RIGHT)) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Favorite.this); //alert for confirm to delete
-                    builder.setMessage("Are you sure to delete?");    //set message
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Favorite.this);
+                    builder.setMessage("Are you sure to delete?");
 
                     builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
                         @Override
@@ -79,35 +71,15 @@ public class Favorite extends AppCompatActivity implements
                     }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            mAdapter.notifyItemRemoved(position + 1);    //notifies the RecyclerView Adapter that data in adapter has been removed at a particular position.
-                            mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());   //notifies the RecyclerView Adapter that positions of element in adapter has been changed from position(removed element index to end of list), please update it.
-                            return;
+                            mAdapter.notifyItemRemoved(position + 1);
+                            mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
                         }
-                    }).show();  //show alert dialog
+                    }).show();
                 }
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
-
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//                int id = (int) viewHolder.itemView.getTag();
-//                String stringId = Integer.toString(id);
-//                Uri uri = FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI;
-//                uri = uri.buildUpon().appendPath(stringId).build();
-//                getContentResolver().delete(uri, null, null);
-//                getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, Favorite.this);
-//            }
-//
-//        }).attachToRecyclerView(mRecyclerView);
-
 
     }
 
@@ -123,7 +95,6 @@ public class Favorite extends AppCompatActivity implements
         super.onResume();
         getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
     }
-
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -181,6 +152,5 @@ public class Favorite extends AppCompatActivity implements
         favoriteIntent.putExtra("id", movie_id);
         startActivity(favoriteIntent);
     }
-
 }
 

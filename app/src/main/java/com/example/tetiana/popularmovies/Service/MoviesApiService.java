@@ -52,5 +52,4 @@ public interface MoviesApiService {
             return results;
         }
     }
-
 }

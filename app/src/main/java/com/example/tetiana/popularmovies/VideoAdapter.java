@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
@@ -36,7 +35,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
                 .load(url)
                 .placeholder(R.color.colorAccent)
                 .into(holder.ivVideo);
-
     }
 
     @Override
@@ -51,10 +49,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
         return (videoList == null) ? 0 : videoList.size();
     }
 
-
     public class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView ivVideo;
-        public VideoViewHolder(View itemView) {
+        VideoViewHolder(View itemView) {
             super(itemView);
             ivVideo = itemView.findViewById(R.id.iv_video);
             itemView.setOnClickListener(this);
@@ -66,7 +63,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
             mOnClickListener.onListItemClick(clickedPosition);
         }
     }
-    public String getVideoKey() {
+    String getVideoKey() {
         return String.valueOf(videoList.get(clickedPosition));
     }
 }

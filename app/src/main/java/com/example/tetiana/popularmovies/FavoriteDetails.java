@@ -5,40 +5,25 @@ import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.example.tetiana.popularmovies.DatabaseFavoriteMovie.FavoriteMovieContract;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
 
 public class FavoriteDetails extends AppCompatActivity {
-
-    private TextView tvOriginalTitle;
-    private ImageView imPosterPath;
-    private ImageView imBackdropPath;
-    private TextView tvReleaseDate;
-    private TextView tvOverview;
-    private TextView tvVoteAverage;
-    private Cursor mCursor;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         final String movie_id = getIntent().getStringExtra("id");
-        imBackdropPath = findViewById(R.id.backdrop_path);
-        imPosterPath= findViewById(R.id.poster_path);
-        tvOriginalTitle = findViewById(R.id.original_title);
-        tvReleaseDate = findViewById(R.id.release_date);
-        tvOverview = findViewById(R.id.overview);
-        tvVoteAverage = findViewById(R.id.vote_average);
-
-
+        ImageView imBackdropPath = findViewById(R.id.backdrop_path);
+        ImageView imPosterPath = findViewById(R.id.poster_path);
+        TextView tvOriginalTitle = findViewById(R.id.original_title);
+        TextView tvReleaseDate = findViewById(R.id.release_date);
+        TextView tvOverview = findViewById(R.id.overview);
+        TextView tvVoteAverage = findViewById(R.id.vote_average);
 
         Cursor cursor = getContentResolver()
                 .query(FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI,
