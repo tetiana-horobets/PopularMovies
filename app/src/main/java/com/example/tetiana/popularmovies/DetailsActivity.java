@@ -135,7 +135,6 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
                 @Override
                 public void onClick(View v) {
                     ibFavoriteMovie.setEnabled(false);
-                    v.setBackgroundResource(R.mipmap.ic_favorite_black_36dp);
                     ContentValues values = new ContentValues();
                     String addMovieTitleToDB = tvOriginalTitle.getText().toString();
                     String addMovieReleaseDataToDB = tvReleaseDate.getText().toString();

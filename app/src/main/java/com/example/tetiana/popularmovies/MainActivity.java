@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         RecyclerView mRecyclerView = findViewById(R.id.rv_show_movie);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -59,61 +62,30 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         startActivity(intent);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.settings_menu, menu);
-        if (menu_selection != -1) {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-            MenuItem selected = menu.findItem(menu_selection);
-            selected.setChecked(true);
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    showPopularMovie();
+                    return true;
+                case R.id.navigation_dashboard:
+                    showTopMovie();
+                    return true;
+                case R.id.navigation_notifications:
+                    Context context = MainActivity.this;
+                    Class destinationActivity = Favorite.class;
+                    Intent intent = new Intent(context, destinationActivity);
+                    startActivity(intent);
+                    return true;
+            }
+            return false;
         }
-        return true;
-    }
+    };
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.isChecked()) {
-            item.setChecked(true);
-        } else {
-            item.setChecked(true);
-            menu_selection = item.getItemId();
-        }
 
-        switch (item.getItemId()) {
-
-            case R.id.menu_popular:
-                showPopularMovie();
-                return true;
-
-            case R.id.menu_top:
-                showTopMovie();
-                return true;
-
-            case R.id.menu_favorite:
-                Context context = MainActivity.this;
-                Class destinationActivity = Favorite.class;
-                Intent intent = new Intent(context, destinationActivity);
-                startActivity(intent);
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt("selection", menu_selection);
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        menu_selection = savedInstanceState.getInt("selection");
-
-    }
 
     static void showPopularMovie() {
         RestAdapter.getService().getPopularMovies(new ChangeMe(mAdapter));

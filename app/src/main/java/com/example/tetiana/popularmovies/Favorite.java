@@ -114,7 +114,7 @@ public class Favorite extends AppCompatActivity implements
     private void restart() {
         Intent intent = new Intent(this, this.getClass());
         finish();
-        ;
+
         this.startActivity(intent);
     }
 
@@ -124,45 +124,6 @@ public class Favorite extends AppCompatActivity implements
         getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.settings_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.isChecked()) {
-            item.setChecked(true);
-        } else {
-            item.setChecked(true);
-            menu_selection = item.getItemId();
-        }
-        switch (item.getItemId()) {
-
-            case R.id.menu_popular:
-                Context context = Favorite.this;
-                Class destinationActivity = MainActivity.class;
-                Intent intent = new Intent(context, destinationActivity);
-                startActivity(intent);
-                return true;
-
-            case R.id.menu_top:
-                Context context2 = Favorite.this;
-                Class destinationActivity2 = MainActivity.class;
-                Intent intent2 = new Intent(context2, destinationActivity2);
-                startActivity(intent2);
-                return true;
-
-            case R.id.menu_favorite:
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -221,17 +182,5 @@ public class Favorite extends AppCompatActivity implements
         startActivity(favoriteIntent);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt("selection", menu_selection);
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        menu_selection = savedInstanceState.getInt("selection");
-
-    }
 }
 
