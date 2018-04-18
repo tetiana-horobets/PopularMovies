@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -39,10 +40,10 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
     private TextView tvVoteAverage;
     private String posterPath;
     private String backdropPath;
-    private VideoAdapter mAdapter;
+    private VideoAdapter videoAdapter;
     private List<String> videoList = new ArrayList<>();
-
-
+    final List<Review> reviewList = new ArrayList<>();
+    private ReviewAdapter reviewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +57,18 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
         tvReleaseDate = findViewById(R.id.release_date);
         tvOverview = findViewById(R.id.overview);
         tvVoteAverage = findViewById(R.id.vote_average);
-        Button ibFavoriteMovie = findViewById(R.id.favorite_movie);
+        final Button ibFavoriteMovie =   findViewById(R.id.favorite_movie);
 
-        RecyclerView mRecyclerView = findViewById(R.id.rv_show_video);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        mAdapter = new VideoAdapter(videoList, this, this);
-        mRecyclerView.setAdapter(mAdapter);
+
+        RecyclerView videoRV = findViewById(R.id.rv_show_video);
+        videoRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        videoAdapter = new VideoAdapter(videoList, this, this);
+        videoRV.setAdapter(videoAdapter);
+
+        RecyclerView reviewRV = findViewById(R.id.rv_show_review);
+        reviewRV.setLayoutManager(new GridLayoutManager(this, 1));
+        reviewAdapter = new ReviewAdapter(reviewList, this);
+        reviewRV.setAdapter(reviewAdapter);
 
         RestAdapter.getService().getDetail(Integer.parseInt(movie_id), new Callback<Details>() {
 
@@ -95,21 +102,19 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
                 for (int i = 0; i < movieTrailerResponse.getResults().size(); i++){
                     videoList.add(movieTrailerResponse.getResults().get(i).getKey());
                 }
-                mAdapter.notifyDataSetChanged();
+                videoAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void failure(RetrofitError error) {
 
             }
         });
 
-        final List<Review> reviewList = new ArrayList<>();
-
         RestAdapter.getService().getMovieRevies(Integer.parseInt(movie_id), new Callback<MoviesApiService.MovieReviewResponse>() {
             @Override
             public void success(MoviesApiService.MovieReviewResponse movieReviewResponse, Response response) {
                 reviewList.addAll(movieReviewResponse.getResults());
+                reviewAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -126,11 +131,11 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
 
         if (cursor.getCount() == 0) {
             // not found in database
-
             ibFavoriteMovie.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
+                    ibFavoriteMovie.setEnabled(false);
+                    v.setBackgroundResource(R.mipmap.ic_favorite_black_36dp);
                     ContentValues values = new ContentValues();
                     String addMovieTitleToDB = tvOriginalTitle.getText().toString();
                     String addMovieReleaseDataToDB = tvReleaseDate.getText().toString();
@@ -154,7 +159,7 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        String id = mAdapter.getVideoKey();
+        String id = videoAdapter.getVideoKey();
         watchYoutubeVideo(getApplicationContext(), id);
     }
 

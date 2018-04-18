@@ -12,6 +12,8 @@ import android.widget.VideoView;
 import com.example.tetiana.popularmovies.DatabaseFavoriteMovie.FavoriteMovieContract;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class FavoriteDetails extends AppCompatActivity {
 
     private TextView tvOriginalTitle;
@@ -29,8 +31,6 @@ public class FavoriteDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         final String movie_id = getIntent().getStringExtra("id");
-
-
         imBackdropPath = findViewById(R.id.backdrop_path);
         imPosterPath= findViewById(R.id.poster_path);
         tvOriginalTitle = findViewById(R.id.original_title);

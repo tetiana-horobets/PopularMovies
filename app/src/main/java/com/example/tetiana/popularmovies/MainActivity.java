@@ -10,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.tetiana.popularmovies.Service.InternetConnection;
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.isChecked()) {
-            item.setChecked(false);
+            item.setChecked(true);
         } else {
             item.setChecked(true);
             menu_selection = item.getItemId();
@@ -114,13 +117,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     }
 
-    private void showPopularMovie() {
+    void showPopularMovie() {
         RestAdapter.getService().getPopularMovies(new ChangeMe(mAdapter));
     }
 
     private void showTopMovie() {
         RestAdapter.getService().getTopRatedMovies(new ChangeMe(mAdapter));
     }
+
+
+
 
     //TODO rename
 

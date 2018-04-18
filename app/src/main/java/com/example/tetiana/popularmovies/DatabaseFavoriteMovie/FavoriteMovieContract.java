@@ -14,7 +14,7 @@ public class FavoriteMovieContract {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_TASKS).build();
 
-        public static final String TABLE_NAME = "favoriteMovieList";
+        static final String TABLE_NAME = "favoriteMovieList";
         public static final String COLUMN_FAVORITE_MOVIE_TITLE = "favoriteMovieTitle";
         public static final String COLUMN_FAVORITE_MOVIE_ID = "favoriteMovieID";
         public static final String COLUMN_FAVORITE_MOVIE_POSTER_PATH = "favoriteMoviePosterPath";
@@ -22,6 +22,5 @@ public class FavoriteMovieContract {
         public static final String COLUMN_FAVORITE_MOVIE_RELEASE_DATA = "favoriteMovieReleaseDate";
         public static final String COLUMN_FAVORITE_MOVIE_OVERVIEW = "favoriteMovieOverview";
         public static final String COLUMN_FAVORITE_MOVIE_VOTE_AVERAGE = "favoriteMovieVoteAverage";
-
     }
 }

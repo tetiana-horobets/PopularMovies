@@ -19,8 +19,7 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
     private Cursor mCursor;
     private Context mContext;
     final private FavoriteMovieAdapter.ListItemClickListener mOnClickListener;
-    private int columIndexs;
-    int clickedPosition;
+    private int clickedPosition;
 
     List<String> movieListId = new ArrayList<>();
 
@@ -42,20 +41,17 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @Override
     public void onBindViewHolder(GuestViewHolder holder, int position) {
-        columIndexs = mCursor.getColumnIndex(FavoriteMovieContract.TitleAndIDsOfMovies._ID);
+        int columnIndex = mCursor.getColumnIndex(FavoriteMovieContract.TitleAndIDsOfMovies._ID);
         int getMoviePosterPatch = mCursor.getColumnIndex(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_POSTER_PATH);
         int favoriteMovieID = mCursor.getColumnIndex(FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_ID);
 
-
         mCursor.moveToPosition(position);
-        final int id = mCursor.getInt(columIndexs);
+        final int id = mCursor.getInt(columnIndex);
 
         String posterPatch = mCursor.getString(getMoviePosterPatch);
         String movieID = mCursor.getString(favoriteMovieID);
 
         movieListId.add(movieID);
-
-
 
         holder.itemView.setTag(id);
         Picasso.with(mContext.getApplicationContext())
@@ -78,7 +74,6 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         GuestViewHolder(View itemView) {
             super(itemView);
             posterPatch = (ImageView) itemView.findViewById(R.id.posterPatch);
-
             itemView.setOnClickListener(this);
         }
 
@@ -89,7 +84,7 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         }
     }
 
-    public String getMovie_id() {
+    String getMovie_id() {
        return movieListId.get(clickedPosition);
     }
 

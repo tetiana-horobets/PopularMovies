@@ -51,11 +51,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
         return (videoList == null) ? 0 : videoList.size();
     }
 
-    void setVideoList(List<String> videoList) {
-        this.videoList = new ArrayList<>();
-        this.videoList.addAll(videoList);
-        notifyDataSetChanged();
-    }
 
     public class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView ivVideo;
