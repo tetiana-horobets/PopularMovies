@@ -10,9 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+
 import android.widget.TextView;
 
 import com.example.tetiana.popularmovies.Service.InternetConnection;
@@ -28,7 +26,7 @@ import retrofit.client.Response;
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener {
 
     List<Movie> movies = new ArrayList<>();
-    private MovieAdapter mAdapter;
+    private static MovieAdapter mAdapter;
     private int menu_selection = -1;
 
     @Override
@@ -117,11 +115,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     }
 
-    void showPopularMovie() {
+    static void showPopularMovie() {
         RestAdapter.getService().getPopularMovies(new ChangeMe(mAdapter));
     }
 
-    private void showTopMovie() {
+    static void showTopMovie() {
         RestAdapter.getService().getTopRatedMovies(new ChangeMe(mAdapter));
     }
 
