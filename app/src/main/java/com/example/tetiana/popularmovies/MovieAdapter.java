@@ -14,13 +14,13 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>
 {
-    private List<Movie> movieList;
+    private ArrayList<Movie> movieList;
     final private ListItemClickListener mOnClickListener;
     private Context context;
 
     private int clickedPosition;
 
-    MovieAdapter(Context context, List<Movie> movieList, ListItemClickListener listener)
+    MovieAdapter(Context context, ArrayList<Movie> movieList, ListItemClickListener listener)
     {
         this.context = context;
         this.movieList = movieList;
@@ -54,7 +54,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return (movieList == null) ? 0 : movieList.size();
     }
 
-    void setMovieList(List<Movie> movieList) {
+    void setMovieList(ArrayList<Movie> movieList) {
         this.movieList = new ArrayList<>();
         this.movieList.addAll(movieList);
         notifyDataSetChanged();
@@ -78,4 +78,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public String getId() {
         return String.valueOf(movieList.get(clickedPosition).getMovie_id());
     }
+
+
 }

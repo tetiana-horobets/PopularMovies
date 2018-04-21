@@ -4,7 +4,8 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@mipmap/ic_view_module_black_36dp"
-        android:title="@string/title_popular" />
+        android:title="@string/title_popular"
+        android:checked="true"/>
 
     <item
         android:id="@+id/navigation_dashboard"

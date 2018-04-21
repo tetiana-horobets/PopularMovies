@@ -17,7 +17,7 @@ public class FavoriteDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        final String movie_id = getIntent().getStringExtra("id");
+        final String movie_id = getIntent().getStringExtra("favoriteDetailsMovie");
         ImageView imBackdropPath = findViewById(R.id.backdrop_path);
         ImageView imPosterPath = findViewById(R.id.poster_path);
         TextView tvOriginalTitle = findViewById(R.id.original_title);

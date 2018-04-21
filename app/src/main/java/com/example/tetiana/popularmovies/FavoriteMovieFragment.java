@@ -2,43 +2,57 @@ package com.example.tetiana.popularmovies;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.tetiana.popularmovies.DatabaseFavoriteMovie.FavoriteMovieContract;
 
-
-public class Favorite extends AppCompatActivity implements
+public class FavoriteMovieFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, FavoriteMovieAdapter.ListItemClickListener {
 
-    private static final String TAG = Favorite.class.getSimpleName();
+    private static final String TAG = FavoriteMovieFragment.class.getSimpleName();
     private static final int TASK_LOADER_ID = 0;
-    private FavoriteMovieAdapter mAdapter;
+    private FavoriteMovieAdapter favoriteMovieAdapter;
     RecyclerView mRecyclerView;
     Cursor cursor = null;
 
+    public static FavoriteMovieFragment newInstance() {
+        return new FavoriteMovieFragment();
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
+    }
 
-        mRecyclerView = (RecyclerView) this.findViewById(R.id.rv_show_favorite_movie);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_favorite_movie, container, false);
+    }
 
-        mAdapter = new FavoriteMovieAdapter(this, this);
-        mRecyclerView.setAdapter(mAdapter);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        mRecyclerView = view.findViewById(R.id.rv_show_favorite_movie);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(), new NumberOfColumns().numberOfColumns(getActivity())));
+
+        favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity().getApplicationContext(), this);
+        mRecyclerView.setAdapter(favoriteMovieAdapter);
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -52,27 +66,27 @@ public class Favorite extends AppCompatActivity implements
 
                 if ((direction == ItemTouchHelper.LEFT )||(direction == ItemTouchHelper.RIGHT)) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Favorite.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("Are you sure to delete?");
 
                     builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            mAdapter.notifyItemRemoved(position);
+                            favoriteMovieAdapter.notifyItemRemoved(position);
                             int id = (int) viewHolder.itemView.getTag();
                             String stringId = Integer.toString(id);
                             Uri uri = FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI;
                             uri = uri.buildUpon().appendPath(stringId).build();
-                            getContentResolver().delete(uri, null, null);
-                            getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, Favorite.this);
-                            mAdapter.movieListId.remove(position);
-                            restart();
+                            getActivity().getContentResolver().delete(uri, null, null);
+                            getActivity().getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, FavoriteMovieFragment.this);
+                            favoriteMovieAdapter.movieListId.remove(position);
+                            //restart();
                         }
                     }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            mAdapter.notifyItemRemoved(position + 1);
-                            mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
+                            favoriteMovieAdapter.notifyItemRemoved(position + 1);
+                            favoriteMovieAdapter.notifyItemRangeChanged(position, favoriteMovieAdapter.getItemCount());
                         }
                     }).show();
                 }
@@ -80,26 +94,24 @@ public class Favorite extends AppCompatActivity implements
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
-
     }
 
-    private void restart() {
-        Intent intent = new Intent(this, this.getClass());
-        finish();
-
-        this.startActivity(intent);
-    }
+//    private void restart() {
+//        Intent intent = new Intent(getActivity(), FavoriteMovieFragment.class);
+//        getActivity().finish();
+//        startActivity(intent);
+//    }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
     }
 
     @SuppressLint("StaticFieldLeak")
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new AsyncTaskLoader<Cursor>(this) {
+        return new AsyncTaskLoader<Cursor>(getActivity()) {
 
             @Override
             protected void onStartLoading() {
@@ -113,7 +125,7 @@ public class Favorite extends AppCompatActivity implements
             @Override
             public Cursor loadInBackground() {
                 try {
-                    return getContentResolver().query(FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI,
+                    return getActivity().getContentResolver().query(FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI,
                             null,
                             null,
                             null,
@@ -135,22 +147,19 @@ public class Favorite extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
+        favoriteMovieAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
+        favoriteMovieAdapter.swapCursor(null);
     }
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        String movie_id = mAdapter.getMovie_id();
-        Context context = Favorite.this;
-        Class destinationActivity = FavoriteDetails.class;
-        Intent favoriteIntent = new Intent(context, destinationActivity);
-        favoriteIntent.putExtra("id", movie_id);
+        String movie_id = favoriteMovieAdapter.getMovie_id();
+        Intent favoriteIntent = new Intent(getActivity(), FavoriteDetails.class);
+        favoriteIntent.putExtra("favoriteDetailsMovie", movie_id);
         startActivity(favoriteIntent);
     }
 }
-
