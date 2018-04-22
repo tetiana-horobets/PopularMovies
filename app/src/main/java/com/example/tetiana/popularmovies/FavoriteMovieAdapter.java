@@ -59,6 +59,8 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
                 .into( holder.posterPatch);
     }
 
+
+
     @Override
     public int getItemCount() {
         if (mCursor == null) {
@@ -84,9 +86,6 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         }
     }
 
-    String getMovie_id() {
-       return movieListId.get(clickedPosition);
-    }
 
     void swapCursor(Cursor c) {
         if (mCursor == c) {

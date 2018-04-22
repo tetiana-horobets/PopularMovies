@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 
 import com.example.tetiana.popularmovies.DatabaseFavoriteMovie.FavoriteMovieContract;
 
+
 public class FavoriteMovieFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, FavoriteMovieAdapter.ListItemClickListener {
 
@@ -47,8 +48,13 @@ public class FavoriteMovieFragment extends Fragment implements
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rv_show_favorite_movie);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(), new NumberOfColumns().numberOfColumns(getActivity())));
 
         favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity().getApplicationContext(), this);
@@ -72,7 +78,7 @@ public class FavoriteMovieFragment extends Fragment implements
                     builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            favoriteMovieAdapter.notifyItemRemoved(position);
+
                             int id = (int) viewHolder.itemView.getTag();
                             String stringId = Integer.toString(id);
                             Uri uri = FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI;
@@ -80,7 +86,9 @@ public class FavoriteMovieFragment extends Fragment implements
                             getActivity().getContentResolver().delete(uri, null, null);
                             getActivity().getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, FavoriteMovieFragment.this);
                             favoriteMovieAdapter.movieListId.remove(position);
-                            //restart();
+                            getActivity().recreate();
+
+
                         }
                     }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
                         @Override
@@ -96,16 +104,11 @@ public class FavoriteMovieFragment extends Fragment implements
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
-//    private void restart() {
-//        Intent intent = new Intent(getActivity(), FavoriteMovieFragment.class);
-//        getActivity().finish();
-//        startActivity(intent);
-//    }
-
     @Override
     public void onResume() {
         super.onResume();
         getActivity().getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
+         // notify adapter
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -157,7 +160,7 @@ public class FavoriteMovieFragment extends Fragment implements
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        String movie_id = favoriteMovieAdapter.getMovie_id();
+        String movie_id = favoriteMovieAdapter.movieListId.get(clickedItemIndex);
         Intent favoriteIntent = new Intent(getActivity(), FavoriteDetails.class);
         favoriteIntent.putExtra("favoriteDetailsMovie", movie_id);
         startActivity(favoriteIntent);
