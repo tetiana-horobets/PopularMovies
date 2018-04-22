@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.example.tetiana.popularmovies.Service.InternetConnection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,8 +20,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TextView mEmptyStateTextView = findViewById(R.id.empty_view);
+        if (!InternetConnection.isOnline()) {
+            mEmptyStateTextView.setText(R.string.no_internet);
+        }
+
         if (savedInstanceState != null) {
-            //Restore the fragment's instance
             fragmentIndex = savedInstanceState.getInt("selectedFragment", 0);
         } else {
             fragmentIndex = 0;
@@ -34,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
                         Fragment selectedFragment = null;
 
                         switch (item.getItemId()) {
-                            case R.id.navigation_home:
+                            case R.id.navigation_popular:
                                 selectedFragment = PopularMovieFragment.newInstance();
                                 fragmentIndex = 0;
                                 break;
-                            case R.id.navigation_dashboard:
+                            case R.id.navigation_top_rated:
                                 selectedFragment = TopRatedMovieFragment.newInstance();
                                 fragmentIndex = 1;
                                 break;
-                            case R.id.navigation_notifications:
+                            case R.id.navigation_favorite:
                                 selectedFragment = FavoriteMovieFragment.newInstance();
                                 fragmentIndex = 2;
                                 break;
@@ -79,5 +85,4 @@ public class MainActivity extends AppCompatActivity {
 
         outState.putInt("selectedFragment", fragmentIndex);
     }
-
 }
