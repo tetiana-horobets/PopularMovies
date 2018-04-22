@@ -17,7 +17,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     private final ListItemClickListener mOnClickListener;
     private int clickedPosition;
 
-    public VideoAdapter(List<String> videoList, Context context, ListItemClickListener listener) {
+    VideoAdapter(List<String> videoList, Context context, ListItemClickListener listener) {
         this.videoList = videoList;
         this.context = context;
         mOnClickListener = listener;

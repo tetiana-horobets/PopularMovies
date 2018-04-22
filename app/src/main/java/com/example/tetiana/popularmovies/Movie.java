@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Movie implements Parcelable {
 
@@ -16,14 +15,12 @@ public class Movie implements Parcelable {
     @SerializedName("id")
     private int movie_id;
 
-    public Movie() {}
-
-    protected Movie(Parcel in) {
+    private Movie(Parcel in) {
         poster = in.readString();
         movie_id = in.readInt();
     }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+    static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
         public Movie createFromParcel(Parcel in) {
             return new Movie(in);
@@ -57,7 +54,7 @@ public class Movie implements Parcelable {
     public static class MovieResult implements Parcelable {
         private ArrayList<Movie> results;
 
-        protected MovieResult(Parcel in) {
+        MovieResult(Parcel in) {
             results = in.createTypedArrayList(Movie.CREATOR);
         }
 

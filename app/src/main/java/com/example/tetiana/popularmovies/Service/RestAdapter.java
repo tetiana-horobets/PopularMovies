@@ -6,7 +6,7 @@ import retrofit.RequestInterceptor;
 
 public class RestAdapter {
 
-    static String key = BuildConfig.MY_MOVIE_DB_API_KEY;
+    private static String key = BuildConfig.MY_MOVIE_DB_API_KEY;
 
     public static MoviesApiService getService(){
         retrofit.RestAdapter restAdapter = new retrofit.RestAdapter.Builder()

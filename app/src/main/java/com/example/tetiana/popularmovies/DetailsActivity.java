@@ -1,5 +1,6 @@
 package com.example.tetiana.popularmovies;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
@@ -123,7 +124,7 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
             }
         });
 
-        Cursor cursor = getContentResolver()
+        @SuppressLint("Recycle") Cursor cursor = getContentResolver()
                 .query(FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI,
                         null,
                         FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_ID + " = " + DatabaseUtils.sqlEscapeString(movie_id),

@@ -85,7 +85,7 @@ public class FavoriteMovieFragment extends Fragment implements
                             uri = uri.buildUpon().appendPath(stringId).build();
                             getActivity().getContentResolver().delete(uri, null, null);
                             getActivity().getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, FavoriteMovieFragment.this);
-                            favoriteMovieAdapter.movieListId.remove(position);
+                            favoriteMovieAdapter.movieId.remove(position);
                             getActivity().recreate();
 
 
@@ -108,7 +108,6 @@ public class FavoriteMovieFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         getActivity().getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
-         // notify adapter
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -160,8 +159,8 @@ public class FavoriteMovieFragment extends Fragment implements
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        String movie_id = favoriteMovieAdapter.movieListId.get(clickedItemIndex);
-        Intent favoriteIntent = new Intent(getActivity(), FavoriteDetails.class);
+        String movie_id = favoriteMovieAdapter.movieId.get(clickedItemIndex);
+        Intent favoriteIntent = new Intent(getActivity(), FavoriteDetailsActivity.class);
         favoriteIntent.putExtra("favoriteDetailsMovie", movie_id);
         startActivity(favoriteIntent);
     }

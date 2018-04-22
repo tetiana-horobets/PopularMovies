@@ -155,7 +155,6 @@
             app:layout_constraintTop_toBottomOf="@+id/vote_average"
             tools:ignore="MissingConstraints" />
 
-
         <LinearLayout
             android:id="@+id/layout"
             android:layout_width="match_parent"

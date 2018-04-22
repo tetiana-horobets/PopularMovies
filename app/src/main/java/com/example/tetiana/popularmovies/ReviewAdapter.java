@@ -14,7 +14,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     private List<Review> reviewList;
     private Context context;
 
-    public ReviewAdapter(List<Review> reviewList, Context context) {
+    ReviewAdapter(List<Review> reviewList, Context context) {
         this.reviewList = reviewList;
         this.context = context;
     }
@@ -41,10 +41,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         return (reviewList == null) ? 0 : reviewList.size();
     }
 
-    public class ReviewHolder extends RecyclerView.ViewHolder {
+    class ReviewHolder extends RecyclerView.ViewHolder {
         TextView reviewAuthor;
         TextView reviewContext;
-        public ReviewHolder(View itemView) {
+        ReviewHolder(View itemView) {
             super(itemView);
             reviewAuthor = itemView.findViewById(R.id.review_author);
             reviewContext = itemView.findViewById(R.id.review_content);

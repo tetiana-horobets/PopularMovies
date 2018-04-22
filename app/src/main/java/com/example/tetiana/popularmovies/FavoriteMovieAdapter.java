@@ -19,9 +19,8 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
     private Cursor mCursor;
     private Context mContext;
     final private FavoriteMovieAdapter.ListItemClickListener mOnClickListener;
-    private int clickedPosition;
 
-    List<String> movieListId = new ArrayList<>();
+    List<String> movieId = new ArrayList<>();
 
     FavoriteMovieAdapter(Context context, FavoriteMovieAdapter.ListItemClickListener listener) {
         this.mContext = context;
@@ -51,15 +50,13 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         String posterPatch = mCursor.getString(getMoviePosterPatch);
         String movieID = mCursor.getString(favoriteMovieID);
 
-        movieListId.add(movieID);
+        movieId.add(movieID);
 
         holder.itemView.setTag(id);
         Picasso.with(mContext.getApplicationContext())
                 .load(posterPatch)
                 .into( holder.posterPatch);
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -81,7 +78,7 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
         @Override
         public void onClick(View v) {
-            clickedPosition = getAdapterPosition();
+            int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
         }
     }

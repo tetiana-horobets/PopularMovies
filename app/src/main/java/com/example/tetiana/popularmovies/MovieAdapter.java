@@ -77,6 +77,4 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public String getId() {
         return String.valueOf(movieList.get(clickedPosition).getMovie_id());
     }
-
-
 }

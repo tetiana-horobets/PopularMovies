@@ -1,5 +1,6 @@
 package com.example.tetiana.popularmovies;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import com.example.tetiana.popularmovies.DatabaseFavoriteMovie.FavoriteMovieCont
 import com.squareup.picasso.Picasso;
 
 
-public class FavoriteDetails extends AppCompatActivity {
+public class FavoriteDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class FavoriteDetails extends AppCompatActivity {
         TextView tvOverview = findViewById(R.id.overview);
         TextView tvVoteAverage = findViewById(R.id.vote_average);
 
-        Cursor cursor = getContentResolver()
+        @SuppressLint("Recycle") Cursor cursor = getContentResolver()
                 .query(FavoriteMovieContract.TitleAndIDsOfMovies.CONTENT_URI,
                         null,
                         FavoriteMovieContract.TitleAndIDsOfMovies.COLUMN_FAVORITE_MOVIE_ID + " = " + DatabaseUtils.sqlEscapeString(movie_id),
