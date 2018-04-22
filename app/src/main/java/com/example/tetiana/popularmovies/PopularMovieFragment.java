@@ -17,7 +17,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class PopularMovieFragment extends Fragment implements MovieAdapter.ListItemClickListener  {
+public class PopularMovieFragment extends Fragment implements MovieAdapter.ListItemClickListener {
 
     private  ArrayList<Movie> popularMovies = new ArrayList<>();
     private  MovieAdapter movieAdapter;
