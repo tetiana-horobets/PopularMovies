@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView mEmptyStateTextView = findViewById(R.id.empty_view);
+        TextView internetConnection = findViewById(R.id.internet_connection);
         if (!InternetConnection.isOnline()) {
-            mEmptyStateTextView.setText(R.string.no_internet);
+            internetConnection.setText(R.string.no_internet);
         }
 
         if (savedInstanceState != null) {
