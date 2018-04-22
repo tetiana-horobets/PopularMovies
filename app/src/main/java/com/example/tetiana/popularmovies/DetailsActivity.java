@@ -48,7 +48,7 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final String movie_id = getIntent().getStringExtra("name");
+        final String movie_id = getIntent().getStringExtra("detailsMovie");
         setContentView(R.layout.activity_details);
 
         imDetailsActivity = findViewById(R.id.backdrop_path);
