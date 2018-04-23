@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,7 +59,7 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
         tvReleaseDate = findViewById(R.id.release_date);
         tvOverview = findViewById(R.id.overview);
         tvVoteAverage = findViewById(R.id.vote_average);
-        final Button ibFavoriteMovie =   findViewById(R.id.favorite_movie);
+        final FloatingActionButton ibFavoriteMovie =   findViewById(R.id.fab);
 
 
         RecyclerView videoRV = findViewById(R.id.rv_show_video);

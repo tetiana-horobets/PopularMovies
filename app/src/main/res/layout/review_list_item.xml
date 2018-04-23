@@ -12,13 +12,14 @@
 
         <TextView
             android:id="@+id/review_author"
-            android:layout_width="433dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"/>
 
+
         <TextView
             android:id="@+id/review_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/cvReview"
             android:layout_alignRight="@+id/cvReview"
