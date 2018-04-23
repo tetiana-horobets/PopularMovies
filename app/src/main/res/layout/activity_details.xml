@@ -14,14 +14,14 @@
 
         <ImageView
             android:id="@+id/backdrop_path"
-            android:layout_width="411dp"
-            android:layout_height="226dp"
+            android:layout_width="match_parent"
+            android:layout_height="236dp"
             android:adjustViewBounds="true"
             android:cropToPadding="false"
             android:padding="0dp"
             app:layout_constraintBottom_toTopOf="@+id/poster_path"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             android:layout_height="180dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="136dp"
+            android:layout_marginTop="144dp"
             android:adjustViewBounds="true"
             android:background="@drawable/black_border"
             android:cropToPadding="true"
@@ -50,12 +50,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="192dp"
+            android:layout_marginTop="216dp"
             android:src="@drawable/star_empy"
             app:layout_anchor="@id/backdrop_path"
             app:layout_anchorGravity="bottom|end"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.92"
+            app:layout_constraintHorizontal_bias="0.927"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/backdrop_path"
             tools:ignore="MissingConstraints" />
@@ -65,6 +65,7 @@
             android:id="@+id/original_title"
             android:layout_width="237dp"
             android:layout_height="27dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@color/colorPrimaryDark"
@@ -72,33 +73,32 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/poster_path"
             app:layout_constraintTop_toBottomOf="@+id/backdrop_path"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="8dp" />
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/release_date"
             android:layout_width="237dp"
             android:layout_height="23dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="text view"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/poster_path"
             app:layout_constraintTop_toBottomOf="@+id/original_title"
-            tools:ignore="HardcodedText,MissingConstraints,SmallSp"
-            android:layout_marginLeft="8dp" />
+            tools:ignore="HardcodedText,MissingConstraints,SmallSp" />
 
         <TextView
             android:id="@+id/vote_average"
             android:layout_width="237dp"
             android:layout_height="18dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/poster_path"
             app:layout_constraintTop_toBottomOf="@+id/release_date"
-            tools:ignore="MissingConstraints,SmallSp"
-            android:layout_marginLeft="8dp" />
+            tools:ignore="MissingConstraints,SmallSp" />
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/Overvie"
@@ -121,21 +121,46 @@
 
         </android.support.v7.widget.CardView>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="20dp"
-            android:background="#c0c0c0"/>
+        <!--<View-->
+        <!--android:id="@+id/view"-->
+        <!--android:layout_width="373dp"-->
+        <!--android:layout_height="2dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:background="#c0c0c0"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/Overvie" />-->
+
+        <TextView
+            android:id="@+id/video_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Trailers"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/Overvie"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Overvie" />
 
         <LinearLayout
             android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Overvie">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/video_title">
 
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/cvVideo"
@@ -145,31 +170,40 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_show_video"
-                    android:layout_width="369dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="20dp"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/favorite_movie"
-                    tools:ignore="NotSibling,RtlHardcoded"
-                    tools:layout_editor_absoluteX="8dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Review"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout" />
+
         <include
             android:id="@+id/reviews"
             layout="@layout/detail_review"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="373dp"
+            android:layout_height="163dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     </android.support.constraint.ConstraintLayout>
 
