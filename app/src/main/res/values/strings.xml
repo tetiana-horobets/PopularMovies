@@ -6,9 +6,7 @@
     <string name="title_top">Top Rated</string>
     <string name="title_favorite">Favorite</string>
     <string name="favorite"> Favorite </string>
-
     <string name="reviews_empty">No reviews found</string>
-
-
-
+    <string name="review">Review</string>
+    <string name="trailers">Trailer</string>
 </resources>

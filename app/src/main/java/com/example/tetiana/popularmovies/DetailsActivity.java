@@ -61,7 +61,6 @@ public class DetailsActivity extends AppCompatActivity implements VideoAdapter.L
         tvVoteAverage = findViewById(R.id.vote_average);
         final FloatingActionButton ibFavoriteMovie =   findViewById(R.id.fab);
 
-
         RecyclerView videoRV = findViewById(R.id.rv_show_video);
         videoRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         videoAdapter = new VideoAdapter(videoList, this, this);

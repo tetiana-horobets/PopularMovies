@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -31,6 +32,7 @@ public class FavoriteMovieFragment extends Fragment implements
     private FavoriteMovieAdapter favoriteMovieAdapter;
     RecyclerView mRecyclerView;
     Cursor cursor = null;
+    Parcelable savedRecyclerLayoutState;
 
     public static FavoriteMovieFragment newInstance() {
         return new FavoriteMovieFragment();
@@ -50,12 +52,7 @@ public class FavoriteMovieFragment extends Fragment implements
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rv_show_favorite_movie);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(), new NumberOfColumns().numberOfColumns(getActivity())));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
 
         favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity().getApplicationContext(), this);
         mRecyclerView.setAdapter(favoriteMovieAdapter);
@@ -102,6 +99,16 @@ public class FavoriteMovieFragment extends Fragment implements
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState != null ) {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable("saveScrollPosition");
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedInstanceState);
+        }
+
     }
 
     @Override
@@ -163,5 +170,11 @@ public class FavoriteMovieFragment extends Fragment implements
         Intent favoriteIntent = new Intent(getActivity(), FavoriteDetailsActivity.class);
         favoriteIntent.putExtra("favoriteDetailsMovie", movie_id);
         startActivity(favoriteIntent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("saveScrollFavorite", mRecyclerView.getLayoutManager().onSaveInstanceState());
+        super.onSaveInstanceState(outState);
     }
 }

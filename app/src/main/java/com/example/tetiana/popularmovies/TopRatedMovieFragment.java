@@ -2,6 +2,7 @@ package com.example.tetiana.popularmovies;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,6 +24,7 @@ public class TopRatedMovieFragment extends Fragment implements MovieAdapter.List
     private ArrayList<Movie> topRatedMovies = new ArrayList<>();
     private  MovieAdapter movieAdapter;
     RecyclerView mRecyclerView;
+    Parcelable savedRecyclerLayoutState;
 
     public static TopRatedMovieFragment newInstance() {
         TopRatedMovieFragment fragment = new TopRatedMovieFragment();
@@ -51,16 +53,19 @@ public class TopRatedMovieFragment extends Fragment implements MovieAdapter.List
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rv_show_top_movie);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
+        movieAdapter = new MovieAdapter(getActivity().getApplicationContext(), topRatedMovies, this);
+        mRecyclerView.setAdapter(movieAdapter);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            topRatedMovies = savedInstanceState.getParcelableArrayList("saveStateTopRatedMovies");}
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(), new NumberOfColumns().numberOfColumns(getActivity())));
-        movieAdapter = new MovieAdapter(getActivity().getApplicationContext(), topRatedMovies, this);
-        mRecyclerView.setAdapter(movieAdapter);
+            topRatedMovies = savedInstanceState.getParcelableArrayList("saveStateTopRatedMovies");
+            savedRecyclerLayoutState = savedInstanceState.getParcelable("saveScrollPositionMovie");
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
     }
 
     public ArrayList<Movie> showTopMovie() {
@@ -91,5 +96,6 @@ public class TopRatedMovieFragment extends Fragment implements MovieAdapter.List
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("saveStateTopRatedMovies", showTopMovie());
+        outState.putParcelable("saveScrollPositionMovie", mRecyclerView.getLayoutManager().onSaveInstanceState());
     }
 }
