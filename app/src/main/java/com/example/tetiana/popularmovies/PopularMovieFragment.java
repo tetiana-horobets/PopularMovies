@@ -56,7 +56,7 @@ public class PopularMovieFragment extends Fragment implements MovieAdapter.ListI
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rv_show_movie);
         movieAdapter = new MovieAdapter(getActivity().getApplicationContext(), popularMovies, this);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),  2));
         mRecyclerView.setAdapter(movieAdapter);
     }
 

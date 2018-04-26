@@ -53,7 +53,7 @@ public class TopRatedMovieFragment extends Fragment implements MovieAdapter.List
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rv_show_top_movie);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),  2));
         movieAdapter = new MovieAdapter(getActivity().getApplicationContext(), topRatedMovies, this);
         mRecyclerView.setAdapter(movieAdapter);
     }

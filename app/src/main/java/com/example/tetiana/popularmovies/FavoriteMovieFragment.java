@@ -52,7 +52,7 @@ public class FavoriteMovieFragment extends Fragment implements
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rv_show_favorite_movie);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
 
         favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity().getApplicationContext(), this);
         mRecyclerView.setAdapter(favoriteMovieAdapter);
