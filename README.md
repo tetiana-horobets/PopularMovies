@@ -16,13 +16,13 @@
 * Implementation of Content Providers with SQLite Database.
 * Updating UI with CursorAdapters and Loaders.
 * Using SyncAdapter for Updating data Synchronously.
+* Fragments.
 
 ### Libraries
 
-* Retrofit
-* Picasso
-* RecyclerView
-* Cardview
+* [Retrofit](https://github.com/square/retrofit) - A type-safe HTTP client for Android and Java
+* [Picasso](http://square.github.io/picasso/) - A powerful library that handles image loading and caching in the app
+* [Support Library Packages](https://developer.android.com/topic/libraries/support-library/packages)
 
 > Click on image and open video on youtube
 
